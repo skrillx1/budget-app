@@ -29,7 +29,7 @@ function closeSalaryModal() {
   document.getElementById("salaryModal").style.display = "none";
 }
 
-/* Custom Unified UI Alert System replacing ugly default confirm/prompts */
+/* Custom Unified UI Alert System */
 function showActionAlert(type) {
   const alertOverlay = document.getElementById("systemAlert");
   const title = document.getElementById("alertTitle");
@@ -38,7 +38,6 @@ function showActionAlert(type) {
   const actionBtn = document.getElementById("alertConfirmBtn");
   const promptInput = document.getElementById("alertPromptInput");
 
-  // Reset display styles
   inputWrapper.style.display = "none";
   actionBtn.classList.remove("danger-action");
   promptInput.value = "";
@@ -134,7 +133,6 @@ function executeResetBudget() {
     render();
     closeSystemAlert();
   } else {
-    // Show sub-error state
     document.getElementById("alertMessage").innerText =
       "Invalid security token mismatch. Please try again:";
     document.getElementById("alertPromptInput").value = "";
@@ -157,7 +155,6 @@ function render() {
     budget.spent.needs + budget.spent.wants + budget.spent.savings;
   let totalRemaining = budget.salaryTotal - totalSpent;
 
-  // Manage semantic tracking colors for central balance container
   let balanceStatusClass = "safe";
   if (totalRemaining <= budget.salaryTotal * 0.15) {
     balanceStatusClass = "critical";
@@ -236,19 +233,6 @@ function loadData() {
     if (budget.salaryTotal === undefined) budget.salaryTotal = 0;
   }
   render();
-}
-
-function unlockApp() {
-  let input = document.getElementById("pinInput").value;
-  let storedPin = localStorage.getItem("pin") || "1234";
-
-  if (input === storedPin) {
-    document.getElementById("lockScreen").style.display = "none";
-    document.getElementById("app").style.display = "flex";
-  } else {
-    showActionAlert("wrong_pin");
-    document.getElementById("pinInput").value = "";
-  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {

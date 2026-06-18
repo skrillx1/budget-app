@@ -12,27 +12,12 @@
       name="apple-mobile-web-app-status-bar-style"
       content="black-translucent"
     />
-    <link rel="stylesheet" href="style.css?v=1.0.1" />
+    <!-- Cache busting parameters attached to prevent old layout glitches -->
+    <link rel="stylesheet" href="style.css?v=1.0.2" />
   </head>
   <body>
-    <!-- LOCK SCREEN -->
-    <div id="lockScreen" class="lock-screen-container">
-      <div class="lock-screen-box">
-        <h2>Enter PIN</h2>
-        <input
-          type="password"
-          id="pinInput"
-          inputmode="numeric"
-          pattern="[0-9]*"
-          maxlength="4"
-          placeholder="••••"
-        />
-        <button class="btn-primary" onclick="unlockApp()">Unlock</button>
-      </div>
-    </div>
-
-    <!-- MAIN APP CONTAINER -->
-    <div id="app" class="app-container" style="display: none">
+    <!-- MAIN APP CONTAINER (Now visible instantly) -->
+    <div id="app" class="app-container">
       <header class="ios-header-wrapper">
         <div class="ios-header">
           <span class="date-badge" id="currentDate">Budget Dashboard</span>
@@ -171,6 +156,6 @@
       </div>
     </div>
 
-    <script src="script.js?v=1.0.1"></script>
+    <script src="script.js?v=1.0.2"></script>
   </body>
 </html>

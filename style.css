@@ -27,62 +27,18 @@
 body {
   background-color: var(--ios-bg);
   color: var(--ios-label);
-  padding: 24px 16px 110px 16px; /* Extra padding bottom to clear the navigation bar */
+  padding: 24px 16px 110px 16px; /* Room for bottom bar spacing */
   display: flex;
   justify-content: center;
   min-height: 100vh;
 }
 
+/* Force explicit container behaviors */
 .app-container {
   width: 100%;
   max-width: 420px;
   display: flex;
   flex-direction: column;
-}
-
-/* Lock Screen Glassmorphism */
-.lock-screen-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, #e5e5ea 0%, #f2f2f7 100%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 2000;
-  padding: 20px;
-}
-
-.lock-screen-box {
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  padding: 30px 24px;
-  border-radius: 24px;
-  text-align: center;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
-  width: 100%;
-  max-width: 320px;
-}
-
-.lock-screen-box h2 {
-  font-size: 22px;
-  font-weight: 600;
-  margin-bottom: 20px;
-  color: var(--ios-label);
-}
-
-.lock-screen-box input {
-  width: 100%;
-  text-align: center;
-  background: rgba(60, 60, 67, 0.06);
-  padding: 14px;
-  border-radius: 12px;
-  font-size: 24px;
-  letter-spacing: 8px;
-  margin-bottom: 20px;
 }
 
 /* iOS Header layout structure with top utilities */
@@ -242,11 +198,9 @@ select {
 .summary-val.safe {
   color: var(--ios-green);
 }
-
 .summary-val.warning {
   color: var(--ios-orange);
 }
-
 .summary-val.critical {
   color: var(--ios-red);
 }
@@ -401,9 +355,7 @@ button:active {
 }
 
 .nav-btn-primary:last-child {
-  background-color: var(
-    --ios-label
-  ); /* Gives clear optical weight visual distinction */
+  background-color: var(--ios-label);
 }
 
 .nav-btn-secondary {
@@ -573,18 +525,4 @@ button:active {
 
 .ios-alert-box .danger-action {
   color: var(--ios-red);
-}
-/* Cache fallback safety layers */
-#app {
-  display: none; /* Forced initial fallback */
-  flex-direction: column;
-}
-
-.modal-backdrop,
-.alert-backdrop {
-  display: none; /* Guaranteed hidden state before JS kicks in */
-}
-
-.lock-screen-container {
-  display: flex !important; /* Force render above everything else */
 }
