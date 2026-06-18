@@ -574,3 +574,17 @@ button:active {
 .ios-alert-box .danger-action {
   color: var(--ios-red);
 }
+/* Cache fallback safety layers */
+#app {
+  display: none; /* Forced initial fallback */
+  flex-direction: column;
+}
+
+.modal-backdrop,
+.alert-backdrop {
+  display: none; /* Guaranteed hidden state before JS kicks in */
+}
+
+.lock-screen-container {
+  display: flex !important; /* Force render above everything else */
+}

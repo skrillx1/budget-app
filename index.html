@@ -12,7 +12,7 @@
       name="apple-mobile-web-app-status-bar-style"
       content="black-translucent"
     />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css?v=1.0.1" />
   </head>
   <body>
     <!-- LOCK SCREEN -->
@@ -68,7 +68,12 @@
     </div>
 
     <!-- SALARY BOTTOM SHEET MODAL -->
-    <div id="salaryModal" class="modal-backdrop" onclick="closeSalaryModal()">
+    <div
+      id="salaryModal"
+      class="modal-backdrop"
+      style="display: none"
+      onclick="closeSalaryModal()"
+    >
       <div class="modal-sheet" onclick="event.stopPropagation()">
         <div class="modal-indicator"></div>
         <div class="modal-header">
@@ -94,7 +99,12 @@
     </div>
 
     <!-- EXPENSE BOTTOM SHEET MODAL -->
-    <div id="expenseModal" class="modal-backdrop" onclick="closeExpenseModal()">
+    <div
+      id="expenseModal"
+      class="modal-backdrop"
+      style="display: none"
+      onclick="closeExpenseModal()"
+    >
       <div class="modal-sheet" onclick="event.stopPropagation()">
         <div class="modal-indicator"></div>
         <div class="modal-header">
@@ -161,6 +171,6 @@
       </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=1.0.1"></script>
   </body>
 </html>
