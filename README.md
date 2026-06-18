@@ -12,7 +12,6 @@ A clean, distraction-free budgeting tool that helps you manage your money using 
 *   **Persistent Balances:** Adjust your budget ratios anytime in settings without messing up your current wallet balances—changes only apply to future paychecks.
 *   **Quick Track & Oops-Proof:** Add expenses instantly or click "Undo" if you made a quick mistake typing one in.
 *   **Total Privacy:** Your financial data belongs to you. No accounts, no links to bank accounts, and zero cloud data collection.
-*   **Safe Keeping:** Includes a built-in safety lock to keep your dashboard secure and prevent accidental data resets.
 
 ---
 
