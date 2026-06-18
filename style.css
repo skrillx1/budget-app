@@ -27,28 +27,77 @@
 body {
   background-color: var(--ios-bg);
   color: var(--ios-label);
-  padding: 40px 16px 60px 16px;
+  padding: 24px 16px 110px 16px; /* Extra padding bottom to clear the navigation bar */
   display: flex;
   justify-content: center;
+  min-height: 100vh;
 }
 
 .app-container {
   width: 100%;
-  max-width: 400px;
+  max-width: 420px;
   display: flex;
   flex-direction: column;
 }
 
-/* iOS Header styling */
-.ios-header {
-  margin-bottom: 24px;
+/* Lock Screen Glassmorphism */
+.lock-screen-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #e5e5ea 0%, #f2f2f7 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  padding: 20px;
+}
+
+.lock-screen-box {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 30px 24px;
+  border-radius: 24px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  width: 100%;
+  max-width: 320px;
+}
+
+.lock-screen-box h2 {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: var(--ios-label);
+}
+
+.lock-screen-box input {
+  width: 100%;
+  text-align: center;
+  background: rgba(60, 60, 67, 0.06);
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 24px;
+  letter-spacing: 8px;
+  margin-bottom: 20px;
+}
+
+/* iOS Header layout structure with top utilities */
+.ios-header-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
   padding-left: 4px;
 }
 
 .ios-header h1 {
   font-size: 34px;
   font-weight: 700;
-  letter-spacing: -1px;
+  letter-spacing: -0.5px;
   color: var(--ios-label);
 }
 
@@ -60,48 +109,56 @@ body {
   letter-spacing: 0.5px;
 }
 
-/* Grouped Forms and Lists mimicking iOS Settings rows */
+.header-actions {
+  padding-top: 18px;
+}
+
+.icon-btn {
+  background: transparent;
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--ios-blue);
+  width: auto;
+  height: auto;
+  border: none;
+  cursor: pointer;
+}
+
+.icon-btn.danger {
+  color: var(--ios-red);
+}
+
+/* Section Title text spacing */
 .section-title {
   font-size: 13px;
   text-transform: uppercase;
-  color: var(--ios-secondary-label);
-  opacity: 0.6;
+  color: var(--ios-tertiary-label);
   margin-left: 16px;
   margin-bottom: 7px;
   letter-spacing: 0.2px;
-  font-weight: 400;
+  font-weight: 500;
   margin-top: 24px;
 }
 
-.ios-section,
 .ios-group {
   background: var(--ios-card-bg);
   border-radius: 12px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-}
-
-.ios-group {
-  border: 1px solid rgba(0, 0, 0, 0.02);
-}
-
-.ios-section {
-  padding: 16px;
-  gap: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
 }
 
 .ios-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 16px;
+  padding: 14px 16px;
   background: var(--ios-card-bg);
   min-height: 48px;
   position: relative;
 }
 
-/* 0.5px native divider effect */
 .ios-group .ios-row:not(:last-child)::after {
   content: "";
   position: absolute;
@@ -116,10 +173,8 @@ body {
   font-size: 17px;
   color: var(--ios-label);
   font-weight: 400;
-  flex-shrink: 0;
 }
 
-/* Inline Right-Aligned Form Inputs */
 input {
   border: none;
   background: transparent;
@@ -149,53 +204,64 @@ select {
   text-align: right;
   outline: none;
   direction: rtl;
-  padding-right: 16px;
   -webkit-appearance: none;
   cursor: pointer;
+  font-weight: 500;
 }
 
-/* Minimalist iOS Header Dashboard Card */
+/* Premium Dynamic Dashboard Card with priority balance display */
 .ios-summary-card {
   background: var(--ios-card-bg);
   border-radius: 16px;
-  padding: 20px;
-  margin-top: 10px;
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.04);
+  padding: 24px 20px;
+  box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.04);
+  margin-bottom: 4px;
 }
 
 .summary-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 12px;
 }
 
 .summary-label {
-  font-size: 13px;
+  font-size: 12px;
   color: var(--ios-tertiary-label);
-  font-weight: 500;
-  margin-bottom: 2px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
 }
 
 .summary-val {
-  font-size: 32px;
+  font-size: 40px;
   font-weight: 700;
-  letter-spacing: -0.5px;
+  letter-spacing: -1px;
+}
+
+.summary-val.safe {
+  color: var(--ios-green);
+}
+
+.summary-val.warning {
+  color: var(--ios-orange);
+}
+
+.summary-val.critical {
+  color: var(--ios-red);
 }
 
 .summary-val.mini {
   font-size: 18px;
   font-weight: 600;
-}
-
-.summary-val.mini.safe {
-  color: var(--ios-green);
+  letter-spacing: -0.2px;
+  color: var(--ios-label);
 }
 
 .summary-divider {
   height: 0.5px;
   background-color: var(--ios-border);
-  margin: 12px 0;
+  margin: 18px 0;
 }
 
 .summary-grid {
@@ -204,13 +270,13 @@ select {
   text-align: center;
 }
 
-/* Allocation Row Elements */
+/* Dynamic Rows Allocation */
 .category-row {
   padding: 16px;
   background: var(--ios-card-bg);
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
   position: relative;
 }
 
@@ -235,12 +301,12 @@ select {
   font-weight: 600;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
 .dot {
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   display: inline-block;
 }
@@ -250,7 +316,6 @@ select {
   font-weight: 600;
 }
 
-/* Progress Bar Track Architecture */
 .progress-container {
   width: 100%;
   height: 8px;
@@ -268,12 +333,11 @@ select {
 .category-sub {
   display: flex;
   justify-content: space-between;
-  font-size: 12px;
+  font-size: 13px;
   color: var(--ios-tertiary-label);
-  font-weight: 500;
+  font-weight: 400;
 }
 
-/* Dynamic status coloring */
 .status-normal {
   color: var(--ios-green);
 }
@@ -284,7 +348,7 @@ select {
   color: var(--ios-red);
 }
 
-/* Interactive Native Button Specs */
+/* Buttons & Interactive States */
 button {
   width: 100%;
   height: 50px;
@@ -293,39 +357,220 @@ button {
   font-size: 17px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 button:active {
-  transform: scale(0.97);
-  filter: brightness(0.9);
-}
-
-.action-row {
-  display: flex;
-  gap: 12px;
-  width: 100%;
+  transform: scale(0.96);
+  opacity: 0.85;
 }
 
 .btn-primary {
   background-color: var(--ios-blue);
   color: #ffffff;
-  flex: 3;
 }
 
-.btn-secondary {
-  background-color: rgba(0, 122, 255, 0.1);
-  color: var(--ios-blue);
-  margin-top: 14px;
+/* Fixed Modern Bottom Tab Action Navigation Bar */
+.bottom-nav-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 0.5px solid var(--ios-border);
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 16px)) 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  z-index: 900;
 }
 
-.btn-danger-text {
+.nav-btn-primary {
+  background-color: var(--ios-blue);
+  color: #ffffff;
+  height: 44px;
+  border-radius: 10px;
+  font-size: 15px;
+  flex: 2;
+}
+
+.nav-btn-primary:last-child {
+  background-color: var(
+    --ios-label
+  ); /* Gives clear optical weight visual distinction */
+}
+
+.nav-btn-secondary {
   background: transparent;
   color: var(--ios-red);
-  font-weight: 400;
+  height: 44px;
+  font-size: 15px;
+  font-weight: 500;
   flex: 1;
-  height: 50px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 59, 48, 0.15);
+  background-color: rgba(255, 59, 48, 0.04);
+}
+
+/* iOS Bottom-Sheet Modals */
+.modal-backdrop {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 1000;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.modal-sheet {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  width: 100%;
+  max-width: 500px;
+  border-radius: 20px 20px 0 0;
+  padding: 16px 20px calc(24px + env(safe-area-inset-bottom, 16px)) 20px;
+  box-shadow: 0px -4px 24px rgba(0, 0, 0, 0.12);
+  animation: slideUp 0.3s cubic-bezier(0.1, 0.76, 0.55, 0.94);
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.modal-indicator {
+  width: 36px;
+  height: 5px;
+  background-color: rgba(0, 0, 0, 0.15);
+  border-radius: 2.5px;
+  margin: 0 auto 16px auto;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modal-header h3 {
+  font-size: 19px;
+  font-weight: 600;
+}
+
+.modal-close-btn {
+  background: transparent;
+  color: var(--ios-blue);
+  font-weight: 400;
+  width: auto;
+  height: auto;
+  font-size: 17px;
+}
+
+/* Custom iOS Native Alert Design System */
+.alert-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+  padding: 30px;
+}
+
+.ios-alert-box {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 14px;
+  width: 100%;
+  max-width: 270px;
+  padding-top: 20px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  animation: alertScale 0.2s cubic-bezier(0.1, 0.8, 0.2, 1);
+}
+
+@keyframes alertScale {
+  from {
+    transform: scale(1.15);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.ios-alert-box h3 {
+  font-size: 17px;
+  font-weight: 600;
+  padding: 0 16px;
+  color: var(--ios-label);
+}
+
+.ios-alert-box p {
+  font-size: 13px;
+  font-weight: 400;
+  padding: 4px 16px 20px 16px;
+  color: var(--ios-label);
+  line-height: 1.4;
+}
+
+.ios-alert-buttons {
+  display: flex;
+  border-top: 0.5px solid var(--ios-border);
+  height: 44px;
+}
+
+.ios-alert-buttons button {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  height: 100%;
+  font-size: 17px;
+  font-weight: 400;
+}
+
+.ios-alert-buttons button:active {
+  background: rgba(0, 0, 0, 0.05);
+  transform: none;
+  opacity: 1;
+}
+
+.alert-btn-cancel {
+  color: var(--ios-blue);
+  border-right: 0.5px solid var(--ios-border) !important;
+}
+
+.alert-btn-action {
+  color: var(--ios-blue);
+  font-weight: 600 !important;
+}
+
+.ios-alert-box .danger-action {
+  color: var(--ios-red);
 }

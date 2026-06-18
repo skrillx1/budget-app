@@ -13,51 +13,105 @@
       content="black-translucent"
     />
     <link rel="stylesheet" href="style.css" />
-    <link rel="manifest" href="manifest.json" />
   </head>
   <body>
-    <div class="app-container">
-      <header class="ios-header">
-        <span class="date-badge">50/30/20 Rule</span>
-        <h1>Pocket Budget</h1>
+    <!-- LOCK SCREEN -->
+    <div id="lockScreen" class="lock-screen-container">
+      <div class="lock-screen-box">
+        <h2>Enter PIN</h2>
+        <input
+          type="password"
+          id="pinInput"
+          inputmode="numeric"
+          pattern="[0-9]*"
+          maxlength="4"
+          placeholder="••••"
+        />
+        <button class="btn-primary" onclick="unlockApp()">Unlock</button>
+      </div>
+    </div>
+
+    <!-- MAIN APP CONTAINER -->
+    <div id="app" class="app-container" style="display: none">
+      <header class="ios-header-wrapper">
+        <div class="ios-header">
+          <span class="date-badge" id="currentDate">Budget Dashboard</span>
+          <h1>Finances</h1>
+        </div>
+        <!-- Top Right System Controls -->
+        <div class="header-actions">
+          <button
+            class="icon-btn danger"
+            onclick="showActionAlert('reset')"
+            title="Reset Budget"
+          >
+            Reset
+          </button>
+        </div>
       </header>
 
-      <section class="ios-section">
-        <div class="ios-row">
-          <label for="salary">15-Day Salary</label>
-          <input
-            id="salary"
-            type="number"
-            inputmode="decimal"
-            placeholder="₱0.00"
-          />
-        </div>
-        <div class="action-row">
-          <button class="btn-primary" onclick="calculateBudget()">
-            Calculate
-          </button>
-          <button class="btn-danger-text" onclick="resetBudget()">Reset</button>
-        </div>
-      </section>
-
+      <!-- MAIN APP RENDER OUTPUT -->
       <div id="output"></div>
 
-      <section class="ios-section">
-        <div class="section-title">Add Expense</div>
+      <!-- BOTTOM NAVIGATION ACTION BAR -->
+      <div class="bottom-nav-bar">
+        <button class="nav-btn-secondary" onclick="showActionAlert('undo')">
+          Undo
+        </button>
+        <button class="nav-btn-primary" onclick="openSalaryModal()">
+          + Salary
+        </button>
+        <button class="nav-btn-primary" onclick="openExpenseModal()">
+          + Expense
+        </button>
+      </div>
+    </div>
+
+    <!-- SALARY BOTTOM SHEET MODAL -->
+    <div id="salaryModal" class="modal-backdrop" onclick="closeSalaryModal()">
+      <div class="modal-sheet" onclick="event.stopPropagation()">
+        <div class="modal-indicator"></div>
+        <div class="modal-header">
+          <h3>Add Salary</h3>
+          <button class="modal-close-btn" onclick="closeSalaryModal()">
+            Cancel
+          </button>
+        </div>
         <div class="ios-group">
           <div class="ios-row">
-            <label for="amount">Amount</label>
-            <input
-              id="amount"
-              type="number"
-              inputmode="decimal"
-              placeholder="₱0.00"
-            />
+            <label for="salaryInput">Amount</label>
+            <input type="number" id="salaryInput" placeholder="₱0.00" />
+          </div>
+        </div>
+        <button
+          class="btn-primary"
+          style="margin-top: 24px"
+          onclick="addSalary()"
+        >
+          Add Salary
+        </button>
+      </div>
+    </div>
+
+    <!-- EXPENSE BOTTOM SHEET MODAL -->
+    <div id="expenseModal" class="modal-backdrop" onclick="closeExpenseModal()">
+      <div class="modal-sheet" onclick="event.stopPropagation()">
+        <div class="modal-indicator"></div>
+        <div class="modal-header">
+          <h3>Add Expense</h3>
+          <button class="modal-close-btn" onclick="closeExpenseModal()">
+            Cancel
+          </button>
+        </div>
+        <div class="ios-group">
+          <div class="ios-row">
+            <label for="expenseAmount">Amount</label>
+            <input type="number" id="expenseAmount" placeholder="₱0.00" />
           </div>
           <div class="ios-row">
-            <label for="category">Category</label>
+            <label for="expenseCategory">Category</label>
             <div class="select-wrapper">
-              <select id="category">
+              <select id="expenseCategory">
                 <option value="needs">Needs (50%)</option>
                 <option value="wants">Wants (30%)</option>
                 <option value="savings">Savings (20%)</option>
@@ -65,11 +119,48 @@
             </div>
           </div>
         </div>
-        <button class="btn-secondary" onclick="addExpense()">
-          Add Expense
+        <button
+          class="btn-primary"
+          style="margin-top: 24px"
+          onclick="addExpense()"
+        >
+          Save Expense
         </button>
-      </section>
+      </div>
     </div>
+
+    <!-- CUSTOM SYSTEM ACTION DIALOG (iOS Alert Style) -->
+    <div id="systemAlert" class="alert-backdrop" style="display: none">
+      <div class="ios-alert-box">
+        <h3 id="alertTitle">Title</h3>
+        <p id="alertMessage">Message body goes here.</p>
+        <div
+          id="alertInputWrapper"
+          style="display: none; width: 100%; margin-top: 12px"
+        >
+          <input
+            type="password"
+            id="alertPromptInput"
+            placeholder="Enter security code"
+            style="
+              width: 100%;
+              text-align: center;
+              padding: 8px;
+              background: rgba(60, 60, 67, 0.08);
+              border-radius: 8px;
+              font-size: 15px;
+            "
+          />
+        </div>
+        <div class="ios-alert-buttons">
+          <button class="alert-btn-cancel" onclick="closeSystemAlert()">
+            Cancel
+          </button>
+          <button class="alert-btn-action" id="alertConfirmBtn">Confirm</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
   </body>
-  <script src="script.js"></script>
 </html>
