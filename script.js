@@ -3,6 +3,11 @@ let budget = {
   needs: 0,
   wants: 0,
   savings: 0,
+  ratios: {
+    needs: 0.5,
+    wants: 0.3,
+    savings: 0.2,
+  },
   spent: {
     needs: 0,
     wants: 0,
@@ -13,7 +18,6 @@ let budget = {
 let lastExpense = null;
 let currentAlertCallback = null;
 
-// Constant map matching target tags for clean render generation
 const CATEGORY_TAGS = {
   needs: ["Rent & Utilities", "Groceries", "Insurance", "Loans"],
   wants: ["Dining Out", "Shopping", "Netflix", "Hobbies"],
@@ -32,8 +36,71 @@ function openSalaryModal() {
   document.getElementById("salaryModal").style.display = "flex";
 }
 
+// Fixed minor salary overlay reference targeting logic mapping issue
 function closeSalaryModal() {
   document.getElementById("salaryModal").style.display = "none";
+}
+
+/* Settings View Layer Handling Functions */
+function openSettingsModal() {
+  document.getElementById("needsSlider").value = budget.ratios.needs * 100;
+  document.getElementById("wantsSlider").value = budget.ratios.wants * 100;
+  document.getElementById("savingsSlider").value = budget.ratios.savings * 100;
+  updateSliderLabels();
+  document.getElementById("settingsModal").style.display = "flex";
+}
+
+function closeSettingsModal() {
+  document.getElementById("settingsModal").style.display = "none";
+}
+
+function triggerResetFromSettings() {
+  closeSettingsModal();
+  showActionAlert("reset");
+}
+
+function updateSliderLabels() {
+  const n = Number(document.getElementById("needsSlider").value);
+  const w = Number(document.getElementById("wantsSlider").value);
+  const s = Number(document.getElementById("savingsSlider").value);
+
+  document.getElementById("needsVal").innerText = n + "%";
+  document.getElementById("wantsVal").innerText = w + "%";
+  document.getElementById("savingsVal").innerText = s + "%";
+
+  const totalSum = n + w + s;
+  const indicator = document.getElementById("allocationTotalIndicator");
+  const saveBtn = document.getElementById("saveRatiosBtn");
+
+  if (totalSum === 100) {
+    indicator.innerText = `Total Rules Sum: ${totalSum}% (Balanced)`;
+    indicator.classList.remove("invalid");
+    saveBtn.disabled = false;
+  } else {
+    indicator.innerText = `Total Rules Sum: ${totalSum}% (Must equal 100%)`;
+    indicator.classList.add("invalid");
+    saveBtn.disabled = true;
+  }
+}
+
+/* Commits changed allocation configurations dynamically for FUTURE salary deposits */
+function saveCustomRatios() {
+  const nRatio = Number(document.getElementById("needsSlider").value) / 100;
+  const wRatio = Number(document.getElementById("wantsSlider").value) / 100;
+  const sRatio = Number(document.getElementById("savingsSlider").value) / 100;
+
+  // 1. Update the rule profiles for future use
+  budget.ratios.needs = nRatio;
+  budget.ratios.wants = wRatio;
+  budget.ratios.savings = sRatio;
+
+  // 2. Clear out historical recalculations from this step.
+  // We leave budget.needs, budget.wants, and budget.savings strictly alone
+  // so your active remaining balances remain completely unaffected.
+
+  saveData();
+  render();
+  closeSettingsModal();
 }
 
 /* Custom Unified UI Alert System */
@@ -93,9 +160,9 @@ function addSalary() {
   if (!salary) return;
 
   budget.salaryTotal += salary;
-  budget.needs += salary * 0.5;
-  budget.wants += salary * 0.3;
-  budget.savings += salary * 0.2;
+  budget.needs += salary * budget.ratios.needs;
+  budget.wants += salary * budget.ratios.wants;
+  budget.savings += salary * budget.ratios.savings;
 
   document.getElementById("salaryInput").value = "";
   saveData();
@@ -133,6 +200,7 @@ function executeResetBudget() {
       needs: 0,
       wants: 0,
       savings: 0,
+      ratios: { needs: 0.5, wants: 0.3, savings: 0.2 },
       spent: { needs: 0, wants: 0, savings: 0 },
     };
     lastExpense = null;
@@ -203,6 +271,8 @@ function createIsolatedBudgetCard(title, key, themeColor) {
   let remaining = total - spent;
   let percent = total > 0 ? Math.min((spent / total) * 100, 100) : 0;
 
+  let currentPercentageRule = Math.round(budget.ratios[key] * 100);
+
   let statusClass = "status-normal";
   if (remaining <= total * 0.2) {
     statusClass = "status-critical";
@@ -210,7 +280,6 @@ function createIsolatedBudgetCard(title, key, themeColor) {
     statusClass = "status-warning";
   }
 
-  // Generate the inline tag bubbles
   let tagsHTML = CATEGORY_TAGS[key]
     .map((tag) => `<span class="example-tag">${tag}</span>`)
     .join("");
@@ -221,6 +290,7 @@ function createIsolatedBudgetCard(title, key, themeColor) {
         <span class="category-title">
           <span class="dot" style="background:${themeColor}"></span>
           ${title}
+          <span class="percentage-badge">· ${currentPercentageRule}%</span>
         </span>
         <span class="category-remaining ${statusClass}">₱${remaining.toLocaleString()} left</span>
       </div>
@@ -247,6 +317,9 @@ function loadData() {
   if (data) {
     budget = JSON.parse(data);
     if (budget.salaryTotal === undefined) budget.salaryTotal = 0;
+    if (!budget.ratios) {
+      budget.ratios = { needs: 0.5, wants: 0.3, savings: 0.2 };
+    }
   }
   render();
 }

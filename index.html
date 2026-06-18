@@ -12,32 +12,28 @@
       name="apple-mobile-web-app-status-bar-style"
       content="black-translucent"
     />
-    <link rel="stylesheet" href="style.css?v=1.0.4" />
+    <link rel="stylesheet" href="style.css?v=1.0.6" />
   </head>
   <body>
-    <!-- MAIN APP CONTAINER -->
     <div id="app" class="app-container">
       <header class="ios-header-wrapper">
         <div class="ios-header">
           <span class="date-badge" id="currentDate">Budget Dashboard</span>
           <h1>Finances</h1>
         </div>
-        <!-- Top Right System Controls -->
         <div class="header-actions">
           <button
-            class="icon-btn danger"
-            onclick="showActionAlert('reset')"
-            title="Reset Budget"
+            class="icon-btn"
+            onclick="openSettingsModal()"
+            title="Open App Settings"
           >
-            Reset
+            Settings
           </button>
         </div>
       </header>
 
-      <!-- MAIN APP RENDER OUTPUT -->
       <div id="output"></div>
 
-      <!-- BOTTOM NAVIGATION ACTION BAR -->
       <div class="bottom-nav-bar">
         <button class="nav-btn-primary" onclick="openSalaryModal()">
           + Salary
@@ -51,7 +47,6 @@
       </div>
     </div>
 
-    <!-- SALARY BOTTOM SHEET MODAL -->
     <div
       id="salaryModal"
       class="modal-backdrop"
@@ -61,7 +56,7 @@
       <div class="modal-sheet" onclick="event.stopPropagation()">
         <div class="modal-indicator"></div>
         <div class="modal-header">
-          <h3>Add Salary</h3>
+          <h3>Add Income Salary</h3>
           <button class="modal-close-btn" onclick="closeSalaryModal()">
             Cancel
           </button>
@@ -77,12 +72,109 @@
           style="margin-top: 24px"
           onclick="addSalary()"
         >
-          Add Salary
+          Add Income
         </button>
       </div>
     </div>
 
-    <!-- EXPENSE BOTTOM SHEET MODAL -->
+    <div
+      id="settingsModal"
+      class="modal-backdrop"
+      style="display: none"
+      onclick="closeSettingsModal()"
+    >
+      <div class="modal-sheet" onclick="event.stopPropagation()">
+        <div class="modal-indicator"></div>
+        <div class="modal-header">
+          <h3>Settings</h3>
+          <button class="modal-close-btn" onclick="closeSettingsModal()">
+            Done
+          </button>
+        </div>
+
+        <div class="section-title">Customize Ratio Rules</div>
+        <div class="ios-group">
+          <div class="ios-slider-row">
+            <div class="slider-meta">
+              <span>Needs Allocation</span>
+              <span id="needsVal">50%</span>
+            </div>
+            <input
+              type="range"
+              id="needsSlider"
+              min="0"
+              max="100"
+              value="50"
+              step="5"
+              oninput="updateSliderLabels()"
+            />
+          </div>
+          <div class="ios-slider-row">
+            <div class="slider-meta">
+              <span>Wants Allocation</span>
+              <span id="wantsVal">30%</span>
+            </div>
+            <input
+              type="range"
+              id="wantsSlider"
+              min="0"
+              max="100"
+              value="30"
+              step="5"
+              oninput="updateSliderLabels()"
+            />
+          </div>
+          <div class="ios-slider-row">
+            <div class="slider-meta">
+              <span>Savings Allocation</span>
+              <span id="savingsVal">20%</span>
+            </div>
+            <input
+              type="range"
+              id="savingsSlider"
+              min="0"
+              max="100"
+              value="20"
+              step="5"
+              oninput="updateSliderLabels()"
+            />
+          </div>
+        </div>
+
+        <div id="allocationTotalIndicator" class="allocation-status-text">
+          Total Rules Sum: 100% (Balanced)
+        </div>
+        <button
+          id="saveRatiosBtn"
+          class="btn-primary"
+          style="margin-top: 14px; margin-bottom: 20px"
+          onclick="saveCustomRatios()"
+        >
+          Update Rule Sets
+        </button>
+
+        <div class="section-title">System Tools</div>
+        <div class="ios-group">
+          <div
+            class="ios-row interactive-row"
+            onclick="triggerResetFromSettings()"
+          >
+            <label style="color: var(--ios-red); font-weight: 500"
+              >Reset Budget Data Ledger</label
+            >
+            <span style="color: var(--ios-tertiary-label); font-size: 17px"
+              >&rsaquo;</span
+            >
+          </div>
+          <div class="ios-row" style="opacity: 0.4">
+            <label style="font-size: 15px; color: var(--ios-tertiary-label)"
+              >+ Future Features Add-on Slot</label
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div
       id="expenseModal"
       class="modal-backdrop"
@@ -123,7 +215,6 @@
       </div>
     </div>
 
-    <!-- CUSTOM SYSTEM ACTION DIALOG (iOS Alert Style) -->
     <div id="systemAlert" class="alert-backdrop" style="display: none">
       <div class="ios-alert-box">
         <h3 id="alertTitle">Title</h3>
@@ -148,6 +239,6 @@
       </div>
     </div>
 
-    <script src="script.js?v=1.0.4"></script>
+    <script src="script.js?v=1.0.6"></script>
   </body>
 </html>

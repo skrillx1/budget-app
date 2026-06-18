@@ -34,7 +34,6 @@
     --ios-input-bg: rgba(235, 235, 245, 0.1);
     --ios-tag-bg: #2c2c2e;
 
-    /* Saturation adjustment for OLED screens */
     --ios-blue: #0a84ff;
     --ios-green: #30d158;
     --ios-orange: #ff9f0a;
@@ -101,7 +100,7 @@ body {
 
 .icon-btn {
   background: transparent;
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 400;
   color: var(--ios-blue);
   width: auto;
@@ -144,7 +143,61 @@ body {
   position: relative;
 }
 
-.ios-group .ios-row:not(:last-child)::after {
+.interactive-row:active {
+  background-color: rgba(142, 142, 147, 0.1);
+  cursor: pointer;
+}
+
+.ios-slider-row {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 16px;
+  background: var(--ios-card-bg);
+  position: relative;
+  gap: 8px;
+}
+
+.slider-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.slider-meta span:last-child {
+  color: var(--ios-blue);
+  font-weight: 600;
+}
+
+input[type="range"] {
+  width: 100%;
+  -webkit-appearance: none;
+  background: #e5e5ea;
+  height: 6px;
+  border-radius: 3px;
+  outline: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  input[type="range"] {
+    background: #2c2c2e;
+  }
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  background: #ffffff;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  box-shadow:
+    0px 3px 8px rgba(0, 0, 0, 0.15),
+    0px 1px 1px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+}
+
+.ios-group .ios-row:not(:last-child)::after,
+.ios-group .ios-slider-row:not(:last-child)::after {
   content: "";
   position: absolute;
   bottom: 0;
@@ -160,7 +213,7 @@ body {
   font-weight: 400;
 }
 
-input {
+input[type="number"] {
   border: none;
   background: transparent;
   font-size: 17px;
@@ -192,6 +245,17 @@ select {
   -webkit-appearance: none;
   cursor: pointer;
   font-weight: 500;
+}
+
+.allocation-status-text {
+  font-size: 13px;
+  text-align: center;
+  margin-top: 12px;
+  font-weight: 600;
+  color: var(--ios-green);
+}
+.allocation-status-text.invalid {
+  color: var(--ios-red);
 }
 
 /* Base Summary Card Layout */
@@ -253,7 +317,7 @@ select {
   text-align: center;
 }
 
-/* Individual Separated Budget Cards */
+/* Individual Card Blocks */
 .budget-card {
   background: var(--ios-card-bg);
   border-radius: 16px;
@@ -276,7 +340,13 @@ select {
   font-weight: 600;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+}
+
+.percentage-badge {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--ios-tertiary-label);
 }
 
 .dot {
@@ -319,7 +389,6 @@ select {
   font-weight: 400;
 }
 
-/* Inline Example Suggestion Tags */
 .tags-wrapper {
   display: flex;
   flex-wrap: wrap;
@@ -348,7 +417,6 @@ select {
   color: var(--ios-red);
 }
 
-/* Navigation & Interactive utilities */
 button {
   width: 100%;
   height: 50px;
@@ -371,6 +439,12 @@ button:active {
 .btn-primary {
   background-color: var(--ios-blue);
   color: #ffffff;
+}
+
+.btn-primary:disabled {
+  background-color: var(--ios-tertiary-label);
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .bottom-nav-bar {
@@ -416,7 +490,7 @@ button:active {
   background-color: rgba(255, 59, 48, 0.04);
 }
 
-/* Modals & Sheet Interfaces */
+/* Modal structural sheets */
 .modal-backdrop {
   display: none;
   position: fixed;
@@ -442,6 +516,8 @@ button:active {
   padding: 16px 20px calc(24px + env(safe-area-inset-bottom, 16px)) 20px;
   box-shadow: 0px -4px 24px rgba(0, 0, 0, 0.12);
   animation: slideUp 0.3s cubic-bezier(0.1, 0.76, 0.55, 0.94);
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 @keyframes slideUp {
@@ -482,7 +558,7 @@ button:active {
   font-size: 17px;
 }
 
-/* Custom iOS Alert Box layout */
+/* Alert system styles */
 .alert-backdrop {
   position: fixed;
   top: 0;
