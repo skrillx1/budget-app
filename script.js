@@ -13,6 +13,13 @@ let budget = {
 let lastExpense = null;
 let currentAlertCallback = null;
 
+// Constant map matching target tags for clean render generation
+const CATEGORY_TAGS = {
+  needs: ["Rent & Utilities", "Groceries", "Insurance", "Loans"],
+  wants: ["Dining Out", "Shopping", "Netflix", "Hobbies"],
+  savings: ["Emergency Fund", "Stocks", "Crypto", "Retirement"],
+};
+
 function openExpenseModal() {
   document.getElementById("expenseModal").style.display = "flex";
 }
@@ -146,7 +153,7 @@ function render() {
     output.innerHTML = `
       <div style="text-align: center; margin-top: 60px; color: var(--ios-tertiary-label); padding: 0 24px;">
         <p style="font-size: 19px; font-weight: 600; color: var(--ios-label);">No Active Budget Set</p>
-        <p style="font-size: 15px; margin-top: 6px; line-height: 1.4;">Tap "+ Salary" on the active navigation drawer to establish allocations.</p>
+        <p style="font-size: 15px; margin-top: 6px; line-height: 1.4;">Tap "+ Salary" on the active navigation bar to establish allocations.</p>
       </div>`;
     return;
   }
@@ -182,17 +189,15 @@ function render() {
     </div>
 
     <div class="section-title">Allocations</div>
-    <div class="ios-group">
-      ${createCategoryRow("Needs (50%)", "needs", "var(--ios-blue)")}
-      ${createCategoryRow("Wants (30%)", "wants", "var(--ios-orange)")}
-      ${createCategoryRow("Savings (20%)", "savings", "var(--ios-green)")}
-    </div>
+    ${createIsolatedBudgetCard("Needs", "needs", "var(--ios-blue)")}
+    ${createIsolatedBudgetCard("Wants", "wants", "var(--ios-orange)")}
+    ${createIsolatedBudgetCard("Savings", "savings", "var(--ios-green)")}
   `;
 
   output.innerHTML = html;
 }
 
-function createCategoryRow(title, key, themeColor) {
+function createIsolatedBudgetCard(title, key, themeColor) {
   let spent = budget.spent[key];
   let total = budget[key];
   let remaining = total - spent;
@@ -205,10 +210,18 @@ function createCategoryRow(title, key, themeColor) {
     statusClass = "status-warning";
   }
 
+  // Generate the inline tag bubbles
+  let tagsHTML = CATEGORY_TAGS[key]
+    .map((tag) => `<span class="example-tag">${tag}</span>`)
+    .join("");
+
   return `
-    <div class="category-row">
+    <div class="budget-card">
       <div class="category-meta">
-        <span class="category-title"><span class="dot" style="background:${themeColor}"></span>${title}</span>
+        <span class="category-title">
+          <span class="dot" style="background:${themeColor}"></span>
+          ${title}
+        </span>
         <span class="category-remaining ${statusClass}">₱${remaining.toLocaleString()} left</span>
       </div>
       <div class="progress-container">
@@ -217,6 +230,9 @@ function createCategoryRow(title, key, themeColor) {
       <div class="category-sub">
         <span>Spent: ₱${spent.toLocaleString()}</span>
         <span>Limit: ₱${total.toLocaleString()}</span>
+      </div>
+      <div class="tags-wrapper">
+        ${tagsHTML}
       </div>
     </div>
   `;

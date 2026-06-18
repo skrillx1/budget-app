@@ -12,11 +12,10 @@
       name="apple-mobile-web-app-status-bar-style"
       content="black-translucent"
     />
-    <!-- Cache busting parameters attached to prevent old layout glitches -->
-    <link rel="stylesheet" href="style.css?v=1.0.2" />
+    <link rel="stylesheet" href="style.css?v=1.0.4" />
   </head>
   <body>
-    <!-- MAIN APP CONTAINER (Now visible instantly) -->
+    <!-- MAIN APP CONTAINER -->
     <div id="app" class="app-container">
       <header class="ios-header-wrapper">
         <div class="ios-header">
@@ -40,14 +39,14 @@
 
       <!-- BOTTOM NAVIGATION ACTION BAR -->
       <div class="bottom-nav-bar">
-        <button class="nav-btn-secondary" onclick="showActionAlert('undo')">
-          Undo
-        </button>
         <button class="nav-btn-primary" onclick="openSalaryModal()">
           + Salary
         </button>
         <button class="nav-btn-primary" onclick="openExpenseModal()">
           + Expense
+        </button>
+        <button class="nav-btn-secondary" onclick="showActionAlert('undo')">
+          Undo
         </button>
       </div>
     </div>
@@ -107,9 +106,9 @@
             <label for="expenseCategory">Category</label>
             <div class="select-wrapper">
               <select id="expenseCategory">
-                <option value="needs">Needs (50%)</option>
-                <option value="wants">Wants (30%)</option>
-                <option value="savings">Savings (20%)</option>
+                <option value="needs">Needs</option>
+                <option value="wants">Wants</option>
+                <option value="savings">Savings</option>
               </select>
             </div>
           </div>
@@ -137,14 +136,7 @@
             type="password"
             id="alertPromptInput"
             placeholder="Enter security code"
-            style="
-              width: 100%;
-              text-align: center;
-              padding: 8px;
-              background: rgba(60, 60, 67, 0.08);
-              border-radius: 8px;
-              font-size: 15px;
-            "
+            style="width: 100%; text-align: center; padding: 8px"
           />
         </div>
         <div class="ios-alert-buttons">
@@ -156,6 +148,6 @@
       </div>
     </div>
 
-    <script src="script.js?v=1.0.2"></script>
+    <script src="script.js?v=1.0.4"></script>
   </body>
 </html>

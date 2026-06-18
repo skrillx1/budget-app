@@ -1,3 +1,4 @@
+/* LIGHT THEME (Default) */
 :root {
   --ios-bg: #f2f2f7;
   --ios-card-bg: #ffffff;
@@ -5,12 +6,40 @@
   --ios-secondary-label: #3c3c43;
   --ios-tertiary-label: #8e8e93;
   --ios-border: rgba(60, 60, 67, 0.12);
+  --ios-nav-bg: rgba(255, 255, 255, 0.85);
+  --ios-sheet-bg: rgba(255, 255, 255, 0.94);
+  --ios-alert-bg: rgba(255, 255, 255, 0.9);
+  --ios-input-bg: rgba(60, 60, 67, 0.06);
+  --ios-tag-bg: #f2f2f7;
 
   /* Apple System Tint Colors */
   --ios-blue: #007aff;
   --ios-green: #34c759;
   --ios-orange: #ff9500;
   --ios-red: #ff3b30;
+}
+
+/* AUTOMATIC DARK THEME */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ios-bg: #121214;
+    --ios-card-bg: #1c1c1e;
+    --ios-label: #ffffff;
+    --ios-secondary-label: #ebebf5;
+    --ios-tertiary-label: #8e8e93;
+    --ios-border: rgba(235, 235, 245, 0.15);
+    --ios-nav-bg: rgba(28, 28, 30, 0.85);
+    --ios-sheet-bg: rgba(28, 28, 30, 0.94);
+    --ios-alert-bg: rgba(30, 30, 32, 0.9);
+    --ios-input-bg: rgba(235, 235, 245, 0.1);
+    --ios-tag-bg: #2c2c2e;
+
+    /* Saturation adjustment for OLED screens */
+    --ios-blue: #0a84ff;
+    --ios-green: #30d158;
+    --ios-orange: #ff9f0a;
+    --ios-red: #ff453a;
+  }
 }
 
 * {
@@ -27,14 +56,15 @@
 body {
   background-color: var(--ios-bg);
   color: var(--ios-label);
-  /* Uses safe-area bounds at the top to clear the iPhone notch/system time */
   padding: calc(12px + env(safe-area-inset-top, 24px)) 16px 110px 16px;
   display: flex;
   justify-content: center;
   min-height: 100vh;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
-/* Force explicit container behaviors */
 .app-container {
   width: 100%;
   max-width: 420px;
@@ -42,11 +72,10 @@ body {
   flex-direction: column;
 }
 
-/* iOS Header layout structure with top utilities */
 .ios-header-wrapper {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end; /* Align elements to the baseline */
+  align-items: flex-end;
   margin-bottom: 16px;
   padding-left: 4px;
 }
@@ -85,13 +114,12 @@ body {
   color: var(--ios-red);
 }
 
-/* Section Title text spacing */
 .section-title {
   font-size: 13px;
   text-transform: uppercase;
   color: var(--ios-tertiary-label);
-  margin-left: 16px;
-  margin-bottom: 7px;
+  margin-left: 4px;
+  margin-bottom: 8px;
   letter-spacing: 0.2px;
   font-weight: 500;
   margin-top: 24px;
@@ -166,7 +194,7 @@ select {
   font-weight: 500;
 }
 
-/* Premium Dynamic Dashboard Card with priority balance display */
+/* Base Summary Card Layout */
 .ios-summary-card {
   background: var(--ios-card-bg);
   border-radius: 16px;
@@ -225,24 +253,16 @@ select {
   text-align: center;
 }
 
-/* Dynamic Rows Allocation */
-.category-row {
-  padding: 16px;
+/* Individual Separated Budget Cards */
+.budget-card {
   background: var(--ios-card-bg);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.02);
+  margin-bottom: 12px;
   display: flex;
   flex-direction: column;
   gap: 12px;
-  position: relative;
-}
-
-.ios-group .category-row:not(:last-child)::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  left: 16px;
-  height: 0.5px;
-  background-color: var(--ios-border);
 }
 
 .category-meta {
@@ -252,7 +272,7 @@ select {
 }
 
 .category-title {
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 600;
   display: flex;
   align-items: center;
@@ -279,6 +299,12 @@ select {
   overflow: hidden;
 }
 
+@media (prefers-color-scheme: dark) {
+  .progress-container {
+    background-color: #2c2c2e;
+  }
+}
+
 .progress-bar {
   height: 100%;
   border-radius: 4px;
@@ -293,6 +319,25 @@ select {
   font-weight: 400;
 }
 
+/* Inline Example Suggestion Tags */
+.tags-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 2px;
+  border-top: 0.5px solid var(--ios-border);
+  padding-top: 10px;
+}
+
+.example-tag {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ios-tertiary-label);
+  background-color: var(--ios-tag-bg);
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
 .status-normal {
   color: var(--ios-green);
 }
@@ -303,7 +348,7 @@ select {
   color: var(--ios-red);
 }
 
-/* Buttons & Interactive States */
+/* Navigation & Interactive utilities */
 button {
   width: 100%;
   height: 50px;
@@ -328,13 +373,12 @@ button:active {
   color: #ffffff;
 }
 
-/* Fixed Modern Bottom Tab Action Navigation Bar */
 .bottom-nav-bar {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(255, 255, 255, 0.85);
+  background: var(--ios-nav-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-top: 0.5px solid var(--ios-border);
@@ -355,8 +399,9 @@ button:active {
   flex: 2;
 }
 
-.nav-btn-primary:last-child {
+.nav-btn-primary:nth-child(2) {
   background-color: var(--ios-label);
+  color: var(--ios-card-bg);
 }
 
 .nav-btn-secondary {
@@ -365,13 +410,13 @@ button:active {
   height: 44px;
   font-size: 15px;
   font-weight: 500;
-  flex: 1;
+  flex: 1.2;
   border-radius: 10px;
   border: 1px solid rgba(255, 59, 48, 0.15);
   background-color: rgba(255, 59, 48, 0.04);
 }
 
-/* iOS Bottom-Sheet Modals */
+/* Modals & Sheet Interfaces */
 .modal-backdrop {
   display: none;
   position: fixed;
@@ -388,7 +433,7 @@ button:active {
 }
 
 .modal-sheet {
-  background: rgba(255, 255, 255, 0.94);
+  background: var(--ios-sheet-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   width: 100%;
@@ -411,7 +456,7 @@ button:active {
 .modal-indicator {
   width: 36px;
   height: 5px;
-  background-color: rgba(0, 0, 0, 0.15);
+  background-color: rgba(142, 142, 147, 0.3);
   border-radius: 2.5px;
   margin: 0 auto 16px auto;
 }
@@ -437,7 +482,7 @@ button:active {
   font-size: 17px;
 }
 
-/* Custom iOS Native Alert Design System */
+/* Custom iOS Alert Box layout */
 .alert-backdrop {
   position: fixed;
   top: 0;
@@ -455,7 +500,7 @@ button:active {
 }
 
 .ios-alert-box {
-  background: rgba(255, 255, 255, 0.9);
+  background: var(--ios-alert-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-radius: 14px;
@@ -465,6 +510,15 @@ button:active {
   text-align: center;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
   animation: alertScale 0.2s cubic-bezier(0.1, 0.8, 0.2, 1);
+}
+
+.ios-alert-box input {
+  width: 90%;
+  text-align: center;
+  padding: 8px;
+  background: var(--ios-input-bg);
+  border-radius: 8px;
+  font-size: 15px;
 }
 
 @keyframes alertScale {
@@ -509,7 +563,7 @@ button:active {
 }
 
 .ios-alert-buttons button:active {
-  background: rgba(0, 0, 0, 0.05);
+  background: rgba(142, 142, 147, 0.1);
   transform: none;
   opacity: 1;
 }
