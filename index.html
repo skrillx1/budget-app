@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <title>Budget Tracker</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="manifest" href="manifest.json" />
+  </head>
+  <body>
+    <div class="app-container">
+      <header class="ios-header">
+        <span class="date-badge">50/30/20 Rule</span>
+        <h1>Pocket Budget</h1>
+      </header>
+
+      <section class="ios-section">
+        <div class="ios-row">
+          <label for="salary">15-Day Salary</label>
+          <input
+            id="salary"
+            type="number"
+            inputmode="decimal"
+            placeholder="₱0.00"
+          />
+        </div>
+        <div class="action-row">
+          <button class="btn-primary" onclick="calculateBudget()">
+            Calculate
+          </button>
+          <button class="btn-danger-text" onclick="resetBudget()">Reset</button>
+        </div>
+      </section>
+
+      <div id="output"></div>
+
+      <section class="ios-section">
+        <div class="section-title">Add Expense</div>
+        <div class="ios-group">
+          <div class="ios-row">
+            <label for="amount">Amount</label>
+            <input
+              id="amount"
+              type="number"
+              inputmode="decimal"
+              placeholder="₱0.00"
+            />
+          </div>
+          <div class="ios-row">
+            <label for="category">Category</label>
+            <div class="select-wrapper">
+              <select id="category">
+                <option value="needs">Needs (50%)</option>
+                <option value="wants">Wants (30%)</option>
+                <option value="savings">Savings (20%)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <button class="btn-secondary" onclick="addExpense()">
+          Add Expense
+        </button>
+      </section>
+    </div>
+  </body>
+  <script src="script.js"></script>
+</html>
