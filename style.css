@@ -27,7 +27,8 @@
 body {
   background-color: var(--ios-bg);
   color: var(--ios-label);
-  padding: 24px 16px 110px 16px; /* Room for bottom bar spacing */
+  /* Uses safe-area bounds at the top to clear the iPhone notch/system time */
+  padding: calc(12px + env(safe-area-inset-top, 24px)) 16px 110px 16px;
   display: flex;
   justify-content: center;
   min-height: 100vh;
@@ -45,7 +46,7 @@ body {
 .ios-header-wrapper {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: flex-end; /* Align elements to the baseline */
   margin-bottom: 16px;
   padding-left: 4px;
 }
@@ -66,7 +67,7 @@ body {
 }
 
 .header-actions {
-  padding-top: 18px;
+  padding-top: 0;
 }
 
 .icon-btn {
