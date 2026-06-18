@@ -1,55 +1,57 @@
-# 💰 iOS-Style Budget Tracker PWA
+# 💰 Simple Budget Tracker
 
-A clean, offline-first personal finance application modeled after native iOS design systems. It helps you manage income distributions using flexible allocation models like the popular 50/30/20 rule, tracking expenses in real-time right from your device's home screen.
+A clean, distraction-free budgeting tool that helps you manage your money using smart allocation rules. It works entirely offline, saves everything directly to your phone or computer, and can be installed as an app without downloading anything from the App Store.
 
----
-
-## 🚀 Core Features
-
-### 📐 Smart Allocation & Settings Engine
-* **Forward-Looking Custom Ratios:** Adjust allocation sliders anytime in Settings without disrupting your active, remaining balances. New rules apply smoothly to future income.
-* **Scalable Architecture:** A decoupled Settings Panel separates configuration tools from daily transaction logging, creating an ideal slot for future feature expansions.
-
-### 💸 Daily Ledger Management
-* **Income Stacking:** Drop in fresh paychecks via `+ Salary` to accumulate balances dynamically across your budget envelopes rather than overwriting current history.
-* **Granular Expense Tracking:** Sort spending quickly across localized category filters featuring instant progress bar updates.
-* **Safety Nets:** Avoid data entry mistakes with a built-in one-click **Undo Last Expense** function.
-
-### 🔒 Enterprise Protection & Performance
-* **Destructive Safety Gates:** Crucial data flushes require an administrator confirmation passphrase sequence (`abcde12345`) to prevent accidental wipeouts.
-* **Progressive Web App (PWA):** Fully optimized for an installable iOS standalone experience, complete with an app-like bottom navigation dock, safe-area padding layouts, and adaptive dark mode integration.
-* **Privacy First:** Keep 100% ownership of your data. The application operates entirely offline, storing ledger entries locally via `LocalStorage`.
+🌐 **Try the Live App:** [skrillx1.github.io/budget-app/](https://skrillx1.github.io/budget-app/)
 
 ---
 
-## 🎨 Budget Envelopes
+## ✨ What It Does
 
-The dashboard maps out your financial health into three core segments, dynamically applying status color states (**Normal**, **Warning**, **Critical**) as you approach category ceilings:
-
-| Allocation Category | Default Split | Includes Targets Like... |
-| :--- | :---: | :--- |
-| **Needs** | `50%` | Rent, Utilities, Groceries, Insurance, Fixed Loans |
-| **Wants** | `30%` | Dining Out, Shopping, Streaming Content, Hobbies |
-| **Savings** | `20%` | Emergency Funds, Stocks, Crypto, Long-term Retirement |
+*   **Smart Money Splitting:** Automatically divides your incoming salary into three customizable envelopes: **Needs**, **Wants**, and **Savings**.
+*   **Persistent Balances:** Adjust your budget ratios anytime in settings without messing up your current wallet balances—changes only apply to future paychecks.
+*   **Quick Track & Oops-Proof:** Add expenses instantly or click "Undo" if you made a quick mistake typing one in.
+*   **Total Privacy:** Your financial data belongs to you. No accounts, no links to bank accounts, and zero cloud data collection.
+*   **Safe Keeping:** Includes a built-in safety lock to keep your dashboard secure and prevent accidental data resets.
 
 ---
 
-## 🛠️ Tech Stack
+## 📱 How to Install It on Your Phone
 
-* **Structure & UI:** Semantic HTML5, CSS3 Custom Variables (Dynamic Light/Dark Mode)
-* **Logic Controller:** Vanilla JavaScript (ES6 Modules)
-* **Data Persistence:** Web Storage API (`LocalStorage`)
-* **Distribution Engine:** Service Worker API for local asset caching and offline functionality
+You don't need an app store. Because this is a **PWA (Progressive Web App)**, you can save it straight to your home screen in seconds.
+
+### For iPhone & iPad (Safari)
+1. Open Safari and go to: `https://skrillx1.github.io/budget-app/`
+2. Tap the **Share** button (the square icon with an arrow pointing up at the bottom of the screen).
+3. Scroll down and tap **Add to Home Screen**.
+4. Tap **Add** in the top right corner. The app icon will appear on your phone.
+
+### For Android (Chrome)
+1. Open Google Chrome and go to: `https://skrillx1.github.io/budget-app/`
+2. Tap the **Three Dots** menu icon in the top-right corner.
+3. Tap **Install app** or **Add to Home Screen**.
+4. Follow the prompt to confirm.
 
 ---
 
-## 📁 Project Structure
+## 🛠️ How it Works under the Hood
+
+For the curious mind, here is how the app handles your money behind the scenes:
+
+*   **LocalStorage:** The app uses your browser's built-in memory bank. If you close the tab, restart your phone, or switch off your internet, your entry history remains saved right there.
+*   **Service Worker:** A small invisible script that allows the app's files to load instantly even if you are totally offline (like on a flight or in an area with bad reception).
+
+---
+
+## 📂 Project Structure
+
+If you downloaded this code to look at files or run it locally on a computer, here is what is inside the folder:
 
 ```text
 budget-app/
-├── index.html          # Application structure & modal containers
-├── style.css           # Native iOS-style tokens & layout engines
-├── script.js           # Transaction handler & state management logic
-├── manifest.json       # PWA configurations & splash screen tokens
-├── service-worker.js   # Offline caching rulesets
-└── README.md           # Documentation guide
+├── index.html          # The visual structure and pages
+├── style.css           # Colors, layouts, and dark mode triggers
+├── script.js          # The brain—calculates percentages and math
+├── manifest.json       # Telling your phone it is an installable app
+├── service-worker.js   # Handles offline capabilities
+└── README.md           # This guide document
